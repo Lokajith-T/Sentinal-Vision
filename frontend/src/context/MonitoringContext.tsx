@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { AlertEvent } from "@/components/AlertsPanel";
+import { API_BASE_URL } from "@/config/apiConfig";
 
 // Define the heatmap point interface based on the UI component
 interface HeatPoint {
@@ -80,7 +81,7 @@ export const MonitoringProvider = ({ children }: { children: ReactNode }) => {
         formData.append("file", fileToProcess.fileObj);
 
         try {
-            const response = await fetch("http://127.0.0.1:8001/archive/analyze", {
+            const response = await fetch(`${API_BASE_URL}/archive/analyze`, {
                 method: "POST",
                 body: formData,
             });
@@ -93,7 +94,7 @@ export const MonitoringProvider = ({ children }: { children: ReactNode }) => {
 
             const pollInterval = setInterval(async () => {
                 try {
-                    const statusRes = await fetch(`http://127.0.0.1:8001/archive/status/${jobId}`);
+                    const statusRes = await fetch(`${API_BASE_URL}/archive/status/${jobId}`);
                     if (statusRes.ok) {
                         const statusData = await statusRes.json();
 
@@ -134,7 +135,7 @@ export const MonitoringProvider = ({ children }: { children: ReactNode }) => {
         const fetchRealDetections = async () => {
             try {
                 // Fetch Live Alerts
-                const alertsResponse = await fetch("http://127.0.0.1:8001/alerts");
+                const alertsResponse = await fetch(`${API_BASE_URL}/alerts`);
                 if (alertsResponse.ok) {
                     const data = await alertsResponse.json();
                     // Map backend event structure to UI AlertEvent structure
@@ -149,14 +150,14 @@ export const MonitoringProvider = ({ children }: { children: ReactNode }) => {
                 }
 
                 // Fetch Total Detections Count (from /events/count)
-                const countResponse = await fetch("http://127.0.0.1:8001/events/count");
+                const countResponse = await fetch(`${API_BASE_URL}/events/count`);
                 if (countResponse.ok) {
                     const countData = await countResponse.json();
                     setTotalDetections(countData.count);
                 }
 
                 // Fetch Recent Events for Logs
-                const eventsResponse = await fetch("http://127.0.0.1:8001/events?limit=100");
+                const eventsResponse = await fetch(`${API_BASE_URL}/events?limit=100`);
                 if (eventsResponse.ok) {
                     const eventsData = await eventsResponse.json();
 
@@ -172,7 +173,7 @@ export const MonitoringProvider = ({ children }: { children: ReactNode }) => {
                 }
 
                 // Fetch Camera Status
-                const camerasResponse = await fetch("http://127.0.0.1:8001/cameras");
+                const camerasResponse = await fetch(`${API_BASE_URL}/cameras`);
                 if (camerasResponse.ok) {
                     const camerasData = await camerasResponse.json();
                     setActiveCameras(camerasData.active_cameras);
@@ -182,7 +183,7 @@ export const MonitoringProvider = ({ children }: { children: ReactNode }) => {
                 }
 
                 // Fetch Detection Stats Grouped Data
-                const statsResponse = await fetch("http://127.0.0.1:8001/stats");
+                const statsResponse = await fetch(`${API_BASE_URL}/stats`);
                 if (statsResponse.ok) {
                     const statsData = await statsResponse.json();
                     setDetectionStats(statsData);

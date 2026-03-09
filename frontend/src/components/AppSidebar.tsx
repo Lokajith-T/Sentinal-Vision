@@ -38,10 +38,10 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4">
         <div className="flex items-center gap-2.5">
-          <Eye className="h-6 w-6 text-sidebar-primary shrink-0" />
+          <img src="/logo.png" alt="Sentinel Vision Logo" className="h-8 w-8 shrink-0 object-contain rounded-full border border-border" />
           {!collapsed && (
-            <span className="text-lg font-bold text-sidebar-primary tracking-tight">
-              Sentinel Vision
+            <span className="text-xl font-black text-sidebar-primary tracking-tighter uppercase italic">
+              Sentinal Vision
             </span>
           )}
         </div>

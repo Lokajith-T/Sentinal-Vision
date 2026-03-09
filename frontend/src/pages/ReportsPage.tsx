@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
+import { API_BASE_URL } from "@/config/apiConfig";
 
 const categoryColors: Record<string, string> = {
   "Person": "#0ea5e9",
@@ -25,8 +26,8 @@ const ReportsPage = () => {
     const fetchAnalytics = async () => {
       try {
         const [hourlyRes, weeklyRes] = await Promise.all([
-          fetch("http://localhost:8001/stats/hourly"),
-          fetch("http://localhost:8001/stats/weekly")
+          fetch(`${API_BASE_URL}/stats/hourly`),
+          fetch(`${API_BASE_URL}/stats/weekly`)
         ]);
 
         if (hourlyRes.ok) setHourlyData(await hourlyRes.json());

@@ -1,4 +1,5 @@
 import { Camera } from "lucide-react";
+import { API_BASE_URL } from "@/config/apiConfig";
 import { useEffect, useRef, useState } from "react";
 
 interface Detection {
@@ -25,7 +26,7 @@ const CameraFeed = ({ name, camId, isActive = true, compact = false, onDetection
     ? camId
     : camId.toLowerCase().replace('-0', '');
 
-  const streamUrl = `http://127.0.0.1:8001/video-feed/${formattedCamId}`;
+  const streamUrl = `${API_BASE_URL}/video-feed/${formattedCamId}`;
 
 
   return (

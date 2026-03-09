@@ -1,5 +1,6 @@
 import DashboardLayout from "@/components/DashboardLayout";
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "@/config/apiConfig";
 import { Plus, Trash2, Edit, Shield, AlertTriangle, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -61,7 +62,7 @@ const DetectionRulesPage = () => {
 
   const fetchRules = async () => {
     try {
-      const response = await fetch("http://localhost:8001/rules");
+      const response = await fetch(`${API_BASE_URL}/rules`);
       if (response.ok) {
         const data = await response.json();
         // Convert cameras string from backend back to array for frontend
@@ -84,7 +85,7 @@ const DetectionRulesPage = () => {
 
   const toggleRule = async (id: string, currentStatus: boolean) => {
     try {
-      const response = await fetch(`http://localhost:8001/rules/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/rules/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ enabled: !currentStatus ? 1 : 0 })
@@ -99,7 +100,7 @@ const DetectionRulesPage = () => {
 
   const deleteRule = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:8001/rules/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/rules/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -119,7 +120,7 @@ const DetectionRulesPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8001/rules", {
+      const response = await fetch(`${API_BASE_URL}/rules`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

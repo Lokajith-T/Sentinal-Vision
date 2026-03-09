@@ -1,4 +1,5 @@
 import DashboardLayout from "@/components/DashboardLayout";
+import { API_BASE_URL } from "@/config/apiConfig";
 import EventHeatmap from "@/components/EventHeatmap";
 import { useMonitoring } from "@/context/MonitoringContext";
 
@@ -14,7 +15,7 @@ const HeatmapPage = () => {
           <div className="relative rounded-lg overflow-hidden bg-black/20 aspect-video w-full flex items-center justify-center">
             {/* Direct feed from the backend which now includes the blended heatmap overlay */}
             <img
-              src="http://127.0.0.1:8001/heatmap-feed/cam1"
+              src={`${API_BASE_URL}/heatmap-feed/cam1`}
               alt="Heatmap Feed Stream"
               className="w-full h-full object-contain"
               onError={(e) => {

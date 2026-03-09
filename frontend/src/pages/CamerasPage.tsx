@@ -1,4 +1,5 @@
 import DashboardLayout from "@/components/DashboardLayout";
+import { API_BASE_URL } from "@/config/apiConfig";
 import CameraFeed from "@/components/CameraFeed";
 import { useMonitoring } from "@/context/MonitoringContext";
 import { useState, useEffect } from "react";
@@ -51,7 +52,7 @@ const CamerasPage = () => {
   useEffect(() => {
     const fetchCameras = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8001/cameras");
+        const response = await fetch(`${API_BASE_URL}/cameras`);
         if (response.ok) {
           const data = await response.json();
           const loadedCameras = data.cameras.map((cam: any) => ({
@@ -85,7 +86,7 @@ const CamerasPage = () => {
     const camId = `cam_${Math.floor(Math.random() * 1000)}`;
 
     try {
-      const response = await fetch("http://127.0.0.1:8001/cameras", {
+      const response = await fetch(`${API_BASE_URL}/cameras`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -122,7 +123,7 @@ const CamerasPage = () => {
     if (!camToRemove) return;
 
     try {
-      const response = await fetch(`http://127.0.0.1:8001/cameras/${camToRemove.camId}`, {
+      const response = await fetch(`${API_BASE_URL}/cameras/${camToRemove.camId}`, {
         method: "DELETE"
       });
 
